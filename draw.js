@@ -12,7 +12,7 @@ var lcTitle = "Trike Monster";
 var numLayers = 3;
 var gameid = 26;
 var interactionStyle = 1;
-var controlled = 1;
+var controlled = 2;
 
 // other
 var x; //drawing context. short because I use it so damn much
@@ -161,6 +161,8 @@ function startGame() {
     buffer.height = bgImage.height;
     bx = buffer.getContext('2d');
     
+    //Pixastic.process(bgImage, "glow", {amount:2.8,radius:1.0});
+    
     setInterval(draw,50);
 }
 
@@ -304,13 +306,8 @@ function draw() {
             x.globalAlpha = lay.pos;
             x.drawImage(buffer,0,0);
         } else if (controlled==2){
-            //blur
-            //bx.globalAlpha = 1;
-            //bx.globalCompositeOperation = "copy";
-            //bx.drawImage(lay.image,0,0);
-            //Pixastic.process(buffer, "blurfast", {amount:lay.pos*10});
-            //x.globalAlpha = 1;
-            //x.drawImage(buffer,0,0);
+            x.globalAlpha = 1;
+            x.drawImage(Pixastic.process(lay.image, "blur", {amount:lay.pos*10}),0,0);
         } else {
             x.drawImage(lay.image,0,0);
         }
