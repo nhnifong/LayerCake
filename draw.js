@@ -11,8 +11,8 @@ var DR_THRESHOLD = 0.01;
 var lcTitle = "Trike Monster";
 var numLayers = 3;
 var gameid = 26;
-var interactionStyle = 2;
-var controlled = 0;
+var interactionStyle = 1;
+var controlled = 1;
 
 // other
 var x; //drawing context. short because I use it so damn much
@@ -40,6 +40,8 @@ var oldy = 0;
 var oldpos = 0;
 var serverclock = 0;
 var clicked = false;
+var buffer;
+var bx;
 
 
 window.onload = function() {
@@ -107,10 +109,11 @@ window.onload = function() {
 
 function imageLoaded() {
     numLoaded++;
-    clearBlack();
-
+    
     // Print message
+    clearBlack();
     whiteTextInTheMiddle( numLoaded+" out of "+(numLayers+1)+ " images loaded" );
+    
     if (numLoaded == (numLayers+1)) {
         connectToGameServer();
     }
@@ -152,11 +155,19 @@ function connectToGameServer(){
 
 function startGame() {
     x.font = "14px sans-serif";
+    
+    buffer = document.createElement('canvas');
+    buffer.width = bgImage.width;
+    buffer.height = bgImage.height;
+    bx = buffer.getContext('2d');
+    
     setInterval(draw,50);
 }
 
 function draw() {
     clearBlack();
+    x.lineWidth = 1;
+    x.globalAlpha = 1;
     
     //divider
     x.fillStyle = '#CCCCCC';
@@ -165,8 +176,6 @@ function draw() {
     thumbnail=null;
 
     //side panel
-    x.lineWidth = 1;
-    x.globalAlpha = 1;
     var a;
     for (a=0; a<numLayers; a++){
         hover = ((mouseX > (width-sidepanelwidth)) && (mouseY > a*25) && (mouseY < (a+1)*25));
@@ -193,7 +202,6 @@ function draw() {
 				x.fillStyle = '#000000';
 				x.fillText("layer "+(a+1), width-sidepanelwidth+10,a*25+20);
 				
-                //noTint(); //////////////FIX
 				if (layers[a].sim){
 					x.drawImage(macicon, width-20, a*layerButtonHeight+8.5);
 				}
@@ -258,11 +266,11 @@ function draw() {
 
     // layers  ////////////////////////////////////////////////////////////////// DRAW LAYERS
     bgw = bgImage.width;
-	bgh = bgImage.height;
+    bgh = bgImage.height;
 
 	// draw background image
     x.globalAlpha = 1;
-	x.drawImage(bgImage,0,0);
+    x.drawImage(bgImage,0,0);
 
     now = millis() - serverclock;
 
@@ -282,10 +290,27 @@ function draw() {
             x.drawImage(lay.image,0,0);
         } else if (controlled==1){
             //brightness
-            
+            // fill offscreen buffer with the tint color
+            bx.globalAlpha = 1;
+            bx.fillStyle = '#FFFFFF';
+            bx.fillRect(0,0,buffer.width,buffer.height);
+            // destination atop makes a result with an alpha channel identical to fg
+            bx.globalCompositeOperation = "destination-atop";
+            bx.drawImage(lay.image,0,0);
+            // to tint the image, draw it first
+            x.globalAlpha = 1;
+            x.drawImage(lay.image,0,0);
+            //then set the global alpha to the amound that you want to tint it, and draw the buffer directly on top of it.
+            x.globalAlpha = lay.pos;
+            x.drawImage(buffer,0,0);
         } else if (controlled==2){
             //blur
-            
+            //bx.globalAlpha = 1;
+            //bx.globalCompositeOperation = "copy";
+            //bx.drawImage(lay.image,0,0);
+            //Pixastic.process(buffer, "blurfast", {amount:lay.pos*10});
+            //x.globalAlpha = 1;
+            //x.drawImage(buffer,0,0);
         } else {
             x.drawImage(lay.image,0,0);
         }
