@@ -12,7 +12,7 @@ var lcTitle = "Trike Monster";
 var numLayers = 3;
 var gameid = 26;
 var interactionStyle = 1;
-var controlled = 2;
+var controlled = 0;
 
 // other
 var x; //drawing context. short because I use it so damn much
@@ -131,6 +131,7 @@ function connectToGameServer(){
         conn.onopen = function(){
             clearBlack();
             whiteTextInTheMiddle( "Connected!" );
+			conn.send("oog1Theeaeb7po5HeiXie3oozefuu1EieiN5ji4lai0Ahy3see5Cie2")
             conn.send("join-game:"+gameid);
             live = true
             setTimeout(startGame,600);

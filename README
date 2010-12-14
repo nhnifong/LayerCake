@@ -1,2 +1,16 @@
+LayerCake is A simplistic online image manipulation program where players see the edits of others in real time. Artists create a LayerCake by uploading several layers as PNGs and specifying some preferences, then Players may interact by picking layers and messing around with the transparency, brightness, blur and so-on in various ways. More types of manipulation to come soon!
 
-Requires node.js to run the server
+See http://nathannifong.com/LayerCake to play it live
+
+It consists of a HTML5/JavaScript game that communicates with a python-twisted server using Websockets. 
+
+The supporting website consists of some PHP, and a MySql database.
+
+Requirements:
+    Client-Side:
+        Browser that supports Websockets and Canvas elements. (Chrome recommended)
+    Server-Side:
+	Python 2.4+
+	python-twisted
+	PHP5
+	MySql
