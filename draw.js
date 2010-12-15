@@ -168,7 +168,7 @@ function startGame() {
     setInterval(draw,50);
 }
 
-function draw() {
+function draw() { 
     clearBlack();
     x.lineWidth = 1;
     x.globalAlpha = 1;
@@ -276,7 +276,7 @@ function draw() {
     x.globalAlpha = 1;
     x.drawImage(bgImage,0,0);
 
-    now = millis() - serverclock;
+    now = serverclock+millis();
 
     if (interactionStyle==2){
         scrubPeriodic()
@@ -317,9 +317,9 @@ function draw() {
 
 	// if dummy is out of sync, send update
 	if (mine != null && live){
-		dummy.physics(now);
+		dummy.physics(now); 
 		if (abs(dummy.pos-mine.pos)>DR_THRESHOLD){
-			if (sendAction()){;
+            if (sendAction()){
 				dummy.pos = mine.pos;
 				dummy.vel = mine.vel;
 				dummy.acc = mine.acc;
@@ -336,8 +336,7 @@ function draw() {
     
 }
 
-function sendAction(){ 
-    window.console.log(millis());
+function sendAction(){
     if (millis()>nextSendTime){
 		conn.send( ("move:"+mine.pos.toString()+","+mine.vel.toString()+","+mine.acc.toString()+"\r") );
 		nextSendTime = millis() + rateLimit;
@@ -446,6 +445,7 @@ function wave(contin){
 
 function gotMessage(evt){
     m = evt.data;
+    console.log(m);
     colon = m.indexOf(':',0);
     if (colon > 0){
         action = m.substring(0,colon);
@@ -467,7 +467,7 @@ function gotMessage(evt){
             lay.pos = parseFloat(para[2]);
 			lay.vel = parseFloat(para[3]);
 			lay.acc = parseFloat(para[4]);
-			lay.lastup = parseFloat(para[5]);            
+			lay.lastup = parseFloat(para[5]); 
             lay.physics( millis() + serverclock );
     
         } else if (action=="layerown"){

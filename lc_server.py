@@ -39,11 +39,6 @@ class Testhandler(WebSocketHandler):
         self.layerOwned = None
         site.clients.append(self)
 
-    def send_time(self):
-        # send current time as an ISO8601 string
-        data = datetime.utcnow().isoformat().encode('utf8')
-        self.transport.write(data)
-
     def frameReceived(self, frame):
         #if frame[-1]=='\r':
         #    frame = frame[:-1]
@@ -122,7 +117,7 @@ class Testhandler(WebSocketHandler):
         self.joinedGame = game
         game.players.append(self)
         # send player current time
-        self.message("servertime:%f" % (time()) )
+        self.message("servertime:%f" % (time()*1000) ) # client needs everything in milliseconds
         # send player game state
         for l in game.layers:
             self.message("layerstate:%i,%i,%f,%f,%f,%f" % (l.num, int(l.owner!=None), l.position, l.velocity, l.acceleration, l.time))
@@ -163,7 +158,7 @@ class Testhandler(WebSocketHandler):
         lay.position = position
         lay.velocity = velocity
         lay.acceleration = acceleration
-        lay.time = time()
+        lay.time = time()*1000
         for other in self.joinedGame.players:
             if other != self:
                 other.message("layerstate:%i,%i,%f,%f,%f,%f" % (lay.num, int(lay.owner!=None), lay.position, lay.velocity, lay.acceleration, lay.time))
@@ -182,7 +177,7 @@ class Layer:
         self.position = 0.0
         self.velocity = 0.0
         self.acceleration = 0.0
-        self.time = time()
+        self.time = time()*1000
 
 if __name__ == "__main__":
     from twisted.internet import reactor

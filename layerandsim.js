@@ -12,6 +12,7 @@ function Layer(){
     // chrome says Uncaught TypeError: Object #<an Object> has no method 'physics'
     // somebody aint doinit right.
     this.physics = function(now){
+        //console.log("Layer Physics now "+now+" lastup "+this.lastup);
 	    elapsed = (now-this.lastup)/1000; //speeds were designed for seconds
 	    this.lastup = now;
 	    if (interactionStyle==0){
