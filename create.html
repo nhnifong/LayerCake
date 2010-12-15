@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Layer Cake</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <style type="text/css">
+body{
+  font-family: sans-serif;
+}
+
+.maincontain{
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 60px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  background-color: #CCCCCC;
+  padding: 10px;
+  padding-left: 22px;
+  width: 800;
+}
+
+.logo{
+  float:left;
+  border: none;
+}
+
+    </style>
+
+<script type="text/javascript">//<![CDATA[
+// Google Analytics for WordPress by Yoast v4.06 | http://yoast.com/wordpress/google-analytics/
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount','UA-11122994-2']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+// End of Google Analytics for WordPress by Yoast v4.0
+//]]></script>
+
+    <script type="text/javascript">
+
+var fpcount = 0;
+
+function addFile() {
+  fpcount++;  
+  var nextfp = document.createElement('input');
+  nextfp.setAttribute('type', 'file');
+  nextfp.setAttribute('name', fpcount);
+  nextfp.setAttribute('onChange', 'addFile()');
+  var mark = document.getElementById('mark');
+  var fpform = document.getElementById('fpform');
+  fpform.insertBefore(document.createElement('br'),mark);
+  fpform.insertBefore(document.createElement('br'),mark);
+  fpform.insertBefore(nextfp,mark);
+  fpform.insertBefore(document.createTextNode(' Layer '+fpcount),mark);
+}
+
+    </script>
+
+  </head>
+  <body>
+
+   <div>
+     <a href="http://uncc.ath.cx/LayerCake/"><img class="logo" src="header.png" alt="Layer Cake (beta)"/></a>
+   </div>
+
+   <div>&nbsp</div>
+    
+   <div class="maincontain">
+
+     <form id="fpform" action="upload.php" method="post" enctype="multipart/form-data">
+     
+      Title: <input type="text" name="title" size="100" maxlength="200" /><br>
+      Author: <input type="text" name="author" size="45" maxlength="40" /><br><br>
+
+      <p> Upload layers as PNG images with alpha channels.<br<br>
+          All layers must have the same dimensions.<br><br>
+          In <a href="http://www.gimp.org/">GIMP</a>, first scale your entire image to about 800x600. This is a reccomended size.
+          Images with width or height exceeding 1200 will be rejected. 
+          Make all layers invisible except the 1st. Click File &gt; Save a copy.
+          Use a name with a .png extension, and GIMP will export the visible layer to a PNG image with alpha channels.
+          Repeat for each layer.<br><br>
+      </p>
+
+      <input type="file" name="bg" onChange="addFile()" />
+      Background Layer (nobody controls this)
+      <br id="mark"><br>
+
+      Interaction Style:<br>
+        <input type="radio" name="istyle" value="0" /> Inflating - hold mouse button to increase, let go to decrease.<br>
+        <input type="radio" name="istyle" value="1" /> Waving - click and drag vertically to change value<br>
+        <input type="radio" name="istyle" value="2" /> Scrubbing - move mouse faster to increase value<br><br>
+
+      Player controls:<br>
+        <input type="radio" name="controlled" value="0" /> Opacity<br>
+        <input type="radio" name="controlled" value="1" /> Brightness<br>
+        <input type="radio" name="controlled" value="2" /> Blur<br><br>
+
+      Simulated Players:<br>
+        <input type="checkbox" name="robots" value="Enabled" /> Enable simulated players (for when nobody is around)<br><br>
+
+      License:<br>
+        <input type="radio" name="license" value="by" />
+	  <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution</a><br>
+	<input type="radio" name="license" value="by-nd" />
+	  <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution No-Derivatives </a><br>
+	<input type="radio" name="license" value="by-nc-nd" />
+          <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution Non-Commercial No-Derivatives</a><br>
+	<input type="radio" name="license" value="by-nc" />
+	  <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution Non-Commercial</a><br>
+	<input type="radio" name="license" value="by-nc-sa" />
+	  <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution Non-Commercial Share-Alike</a><br>
+	<input type="radio" name="license" value="by-sa" />
+	   <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution Share-Alike</a><br>
+        <input type="radio" name="license" value="COPYRIGHT" /> Copyright<br>
+        <input type="radio" name="license" value="PUBLIC" /> Public Domain<br>
+        <br>
+
+      Need to give credit to an original author? do that here.<br>
+        Name: <input type="text" size=30 name="creditname" /><br>
+        Link: <input type="text" size=50 name="creditlink" /><br><br>
+
+      Edit phrase: <input type="text" name="editpass" size="30" /><br>
+        You need to know it to edit the layercake in the future.<br><br>
+
+      <input type="submit" value="Finished" />
+     </form>
+     <br>Thank you for contributing!
+   </div>
+  </body
+</html>
