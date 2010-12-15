@@ -108,6 +108,7 @@ _gaq.push(['_trackPageview']);
         controlled = <? echo($controlled); ?>;
     </script>
     
+    <script type="text/javascript" src="pixastic.custom.js"></script>
     <script type="text/javascript" src="layerandsim.js"></script>
     <script type="text/javascript" src="draw.js"></script>
 
