@@ -1,6 +1,6 @@
 // constants
 var pathToLayers = "http://uncc.ath.cx/LayerCake/images/";
-var gsLocation = "ws://localhost:8000/"
+var gsLocation = "ws://localhost:8080/"
 var sidepanelwidth = 120;
 var borderwidth = 10;
 var layerButtonHeight = 25

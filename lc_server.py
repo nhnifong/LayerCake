@@ -25,11 +25,16 @@ from websocket import WebSocketHandler, WebSocketSite
 
 sys.stdout = sys.stderr
 
+credentials = open("dbcred").readlines()
+dbuser = credentials[0][:-1]
+dbpass = credentials[1][:-1]
+bdname = credentials[2][:-1]
+
 class Testhandler(WebSocketHandler):
     def __init__(self, transport):
         WebSocketHandler.__init__(self, transport)
-		print "New Connection: %s"% (self.transport.getPeer())
-		self.trusted = False
+        print "New Connection: %s"% (self.transport.getPeer())
+        self.trusted = False
         self.joinedGame = None
         self.layerOwned = None
         site.clients.append(self)
@@ -71,19 +76,19 @@ class Testhandler(WebSocketHandler):
         self.transport.write(message)
 
     def connectionLost(self, reason):
-	        print "Lost client %i because %s"% (id(self), str(reason))
-	        if self.joinedGame != None:
-	            self.joinedGame.players.remove(self)
-	        lay = self.layerOwned
-	        if lay != None:
-	            #self.move(0,0,0)
-	            lay.owner = None
-	            self.layerOwned = None
-	            for c in site.clients:
-	                if c is not self:
-						if c.trusted:
-	                		c.message("layerown:%i,%i" % (lay.num, 0))
-	        site.clients.remove(self)
+            print "Lost client %i because %s"% (id(self), str(reason))
+            if self.joinedGame != None:
+                self.joinedGame.players.remove(self)
+            lay = self.layerOwned
+            if lay != None:
+                #self.move(0,0,0)
+                lay.owner = None
+                self.layerOwned = None
+                for c in site.clients:
+                    if c is not self:
+                        if c.trusted:
+                            c.message("layerown:%i,%i" % (lay.num, 0))
+            site.clients.remove(self)
 
     def joinGame(self, gameid):
         game = None
@@ -99,7 +104,7 @@ class Testhandler(WebSocketHandler):
                 gamelist.append(game)
         except KeyError:
             # if no games with this id exist, check database to see if this is a valid gameid
-            conn = mysql.connect( host='localhost', user='cakephp', passwd='nj2kjn8s9d', db='layercakedb' )
+            conn = mysql.connect( host='localhost', user=dbuser, passwd=dbpass, db=dbname )
             cursor = conn.cursor()
             res = cursor.execute ("SELECT numLayers FROM cakes WHERE id=%s;" % gameid)
             if res==1:
@@ -186,11 +191,11 @@ if __name__ == "__main__":
     # serve index.html from the local directory
     root = File('.')
     site = WebSocketSite(root)
-    site.addHandler('/test', Testhandler)
+    site.addHandler('/', Testhandler)
 
-	# store server variables as children of site
-	site.clients = []
-	site.games = {}
+    # store server variables as children of site
+    site.clients = []
+    site.games = {}
 
     reactor.listenTCP(8080, site)
     reactor.run()
