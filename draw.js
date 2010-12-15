@@ -336,8 +336,9 @@ function draw() {
     
 }
 
-function sendAction(){
-	if (millis()>nextSendTime){
+function sendAction(){ 
+    window.console.log(millis());
+    if (millis()>nextSendTime){
 		conn.send( ("move:"+mine.pos.toString()+","+mine.vel.toString()+","+mine.acc.toString()+"\r") );
 		nextSendTime = millis() + rateLimit;
 		return true;
@@ -523,7 +524,7 @@ function gotMessage(evt){
 
 function sendAction(){
 	if (millis()>nextSendTime){
-		conn.send( "move:"+str(mine.pos)+","+str(mine.vel)+","+str(mine.acc)+"\r");
+		conn.send( "move:"+str(mine.pos)+","+str(mine.vel)+","+str(mine.acc));
 		nextSendTime = millis() + rateLimit;
 		return true;
 	} else {
