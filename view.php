@@ -101,11 +101,11 @@ _gaq.push(['_trackPageview']);
 
 
     <script type="text/javascript">
-        lcTitle = "<? $title ?>";
-        numLayers = <? $numLayers ?>;
-        gameid = <? $id ?>;
-        interactionStyle = <? $istyle ?>;
-        controlled = <? $controlled ?>;
+        lcTitle = "<? echo($title); ?>";
+        numLayers = <? echo($numLayers); ?>;
+        gameid = <? echo($id); ?>;
+        interactionStyle = <? echo($istyle); ?>;
+        controlled = <? echo($controlled); ?>;
     </script>
     
     <script type="text/javascript" src="layerandsim.js"></script>
@@ -127,7 +127,7 @@ _gaq.push(['_trackPageview']);
   <div>&nbsp;</div>
     
    <div class="maincontain">
-     <canvas id="myDrawing" width="<? $width ?>" height="<? $height ?>">
+     <canvas id="myDrawing" width="<? echo($width); ?>" height="<? echo($height); ?>">
        <p>Your browser doesn't support canvas.</p>
      </canvas>
 
