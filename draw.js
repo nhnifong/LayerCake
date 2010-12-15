@@ -5,14 +5,15 @@ var sidepanelwidth = 120;
 var borderwidth = 10;
 var layerButtonHeight = 25
 var TWO_PI = 6.283185307179586476
-var DR_THRESHOLD = 0.01;
+var DR_THRESHOLD = 0.01; // Dont use it on a planet
 
 // properties of this layercake
-var lcTitle = "Trike Monster";
-var numLayers = 3;
-var gameid = 26;
-var interactionStyle = 1;
-var controlled = 0;
+// set them in the parent document
+//lcTitle = "Trike Monster";
+//numLayers = 3;
+//gameid = 26;
+//interactionStyle = 1;
+//controlled = 0;
 
 // other
 var x; //drawing context. short because I use it so damn much
