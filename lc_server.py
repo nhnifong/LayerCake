@@ -23,12 +23,12 @@ from twisted.internet import task
 
 from websocket import WebSocketHandler, WebSocketSite
 
-sys.stdout = sys.stderr
+#sys.stdout = sys.stderr
 
 credentials = open("dbcred").readlines()
 dbuser = credentials[0][:-1]
 dbpass = credentials[1][:-1]
-bdname = credentials[2][:-1]
+dbname = credentials[2][:-1]
 
 class Testhandler(WebSocketHandler):
     def __init__(self, transport):
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     # serve index.html from the local directory
     root = File('.')
     site = WebSocketSite(root)
-    site.addHandler('/', Testhandler)
+    site.addHandler('/serv', Testhandler)
 
     # store server variables as children of site
     site.clients = []
